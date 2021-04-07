@@ -36,8 +36,25 @@ const resolvers = mergeResolvers(loadFilesSync(path.join(__dirname, './resolvers
 //graphql server
 const apolloServer = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
 });
 
 // vinculation apollo server with express framework
 apolloServer.applyMiddleware({ app });
+
+// server
+const httpserver = http.createServer(app);
+
+// rest endpoint
+app.get('/rest', function(req, res) {
+    res.json({
+        data: 'you hit rest endpoint great!'
+    });
+});
+
+// port
+app.listen(process.env.PORT, function() {
+    console.log(`server is ready at http://localhost:${process.env.PORT}`);
+    console.log(`graphql server is ready at http://localhost:${process.env.PORT}${apolloServer.graphqlPath}`);
+});
+
