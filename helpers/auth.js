@@ -6,17 +6,7 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
-/*let authorized = false;
-
-exports.authCheck  = (req, res, next = (f) => f) => {
-    if (authorized) {
-        next();
-    } else {
-        throw new Error("Unauthorized");
-    }
-};*/
-
-// helper authentication
+// helper authentication graphql
 exports.authCheck = async (req) => {
   try {
     const currentUser = await admin.auth().verifyIdToken(req.headers.authtoken);
@@ -27,3 +17,30 @@ exports.authCheck = async (req) => {
     throw new Error("Invalid or expired token");
   }
 };
+
+// helper authentication rest
+exports.authCheckMiddleware = (req, res, next) => {
+  if (req.headers.authtoken) {
+    admin
+      .auth()
+      .verifyIdToken(req.headers.authtoken)
+      .then((result) => {
+        next();
+      })
+      .catch((error) => console.log(error));
+  } else {
+    res.json({ error: "Unauthorized" });
+  }
+};
+
+/*let authorized = false;
+
+exports.authCheck  = (req, res, next = (f) => f) => {
+    if (authorized) {
+        next();
+    } else {
+        throw new Error("Unauthorized");
+    }
+};*/
+
+

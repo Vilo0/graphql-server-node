@@ -6,16 +6,9 @@ module.exports = gql`
   type Query {
     me: String!
   }
-  type Query {
-    profile: User!
-  }
   type Image {
     url: String
     public_id: String
-  } 
-  type UserCreateResponse {
-    username: String!
-    email: String!
   }
   type User {
     _id: ID!
@@ -44,13 +37,12 @@ module.exports = gql`
     email: String!
     images: [ImageInput]
     about: String
-  } 
+  }
+  type Query {
+    profile: User!
+  }
   type Mutation {
     userCreate: UserCreateResponse!
-    userUpdate(input: UserUpdateInput): User!  
+    userUpdate(input: UserUpdateInput): User!
   }
 `;
-
-
-    
-
