@@ -80,7 +80,7 @@ app.post("/uploadimages", authCheckMiddleware, (req, res) => {
     (result) => {
       console.log(result);
       res.send({
-        url: result.secure.url,
+        url: result.secure_url,
         public_id: result.public_id
       });
     },
@@ -88,10 +88,11 @@ app.post("/uploadimages", authCheckMiddleware, (req, res) => {
       public_id: `${Date.now()}`, // public name
       resource_type: "auto" // JPEG, PNG
     }
-  );
+  )
+  .then((callback) => callback());
 });
 
-// remove images
+// remove images cloudinary
 app.post("/removeimage", authCheckMiddleware, (req, res) => {
   let image_id = req.body.public_id;
 
