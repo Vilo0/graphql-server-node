@@ -10,7 +10,7 @@ const { authCheckMiddleware } = require("./helpers/auth");
 const cors = require("cors");
 const cloudinary = require("cloudinary");
 
-// express server middleware
+// express servers
 const app = express();
 
 // db

@@ -24,10 +24,7 @@ const postCreate = async (parent, args, { req }) => {
 
 // query generic
 const allPosts = async (parent, args) => {
-  return await Post.find({})
-      .populate('postedBy', 'username _id')
-      .sort({ createdAt: -1 })
-      .exec();
+  return await Post.find({}).exec();
 };
 
 // query generic
@@ -52,18 +49,4 @@ module.exports = {
   },
 };
 
-// queries
-//const totalPosts = () => posts.length;
-//const allPosts = () => posts;
 
-/*const newPost = (parent, args) => {
-  console.log(args);
-  // create a new post object
-  const post = {
-    id: posts.length + 1,
-    ...args.input,
-  };
-  // push new post object to posts array
-  posts.push(post);
-  return post;
-};*/
