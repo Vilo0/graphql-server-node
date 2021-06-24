@@ -24,7 +24,10 @@ const postCreate = async (parent, args, { req }) => {
 
 // query generic
 const allPosts = async (parent, args) => {
-  return await Post.find({}).exec();
+  return await Post.find({})
+    .populate("postedBy", "username _id")
+    .sort({ createdAt: -1 })
+    .exec();
 };
 
 // query generic
