@@ -5,12 +5,12 @@ const User = require('../models/user');
 
 const me = (parent, args, { req, res }) => {
   authCheck(req, res);
-  return "Miguel";
+  return "Edgard";
 };
 
 const profile = async (parent, args, { req }) => {
   const currentUser = await authCheck(req);
-  return await User.findOne({ email: currentUser.email }).exec();
+  return await User.findOne({ email: currentUser.email });
 };
 
 const publicProfile = async (parent, args, { req }) => {
