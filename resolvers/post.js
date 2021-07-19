@@ -74,13 +74,21 @@ const postsByUser = async (parent, args, { req }) => {
     email: currentUser.email
   }).exec();
 
-  
+  const total = await totalPosts();
+  const pages = parseInt(total / limit) > 0 ? parseInt(total / limit) : 1;
 
-  return await Post.find({ postedBy: currentUserFromDb })
+  const posts =  await Post.find({ postedBy: currentUserFromDb })
     .populate("postedBy", "_id username")
     .sort({ createdAt: -1 })
     .limit(limit)
     .skip(limit * page);
+
+  return {
+    posts,
+    page: page + 1,
+    pages,
+    total
+  }
 };
 
 const postShow = async (_, { id }, { req }) => {
