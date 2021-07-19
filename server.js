@@ -50,6 +50,8 @@ const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ req, res }) => ({ req, res }),
+  playground: true,
+  introspection: true,
 });
 
 // vinculation apollo server with express framework
