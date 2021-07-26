@@ -22,6 +22,10 @@ const postCreate = async (parent, args, { req }) => {
   return newPost; 
 };
 
+const postShow = async (_, { id }, { req }) => {
+  return Post.findById(id).populate("postedBy", "_id username").exec();
+}
+
 const postUpdate = async (_, args, { req }) => {
   return await Post.findByIdAndUpdate(args.id, { $set: args.input }, { new: true }).exec();
 };
@@ -31,7 +35,7 @@ const postDelete = async (_, args, { req }) => {
 };
 
 const totalPosts = async (_, args) => {
-  return await Post.countDocuments();
+  return await Post.countDocuments().exec();
 }
 
 // query generic
@@ -42,9 +46,10 @@ const allPosts = async (parent, args) => {
   if(args.search) search = args.search
   page = Math.max(0, page);
 
-  const conditions = search ? { $text: { $search: search } } : {};
+  const conditions = search ? { "content": { "$regex": search, "$options": "i" } } : {};
 
-  const total = await totalPosts();
+
+  const total = totalPosts(conditions);
   const pages = parseInt(total / limit) > 0 ? parseInt(total / limit) : 1;
   
   const posts = await Post.find(conditions)
@@ -74,10 +79,14 @@ const postsByUser = async (parent, args, { req }) => {
     email: currentUser.email
   }).exec();
 
-  const total = await totalPosts();
+  
+  let conditions = search ? { "content": { "$regex": search, "$options": "i" } } : {};
+  conditions = { ...conditions, postedBy: currentUserFromDb };
+  
+  const total = totalPosts(conditions);
   const pages = parseInt(total / limit) > 0 ? parseInt(total / limit) : 1;
-
-  const posts =  await Post.find({ postedBy: currentUserFromDb })
+  
+  const posts =  await Post.find(conditions)
     .populate("postedBy", "_id username")
     .sort({ createdAt: -1 })
     .limit(limit)
@@ -90,10 +99,6 @@ const postsByUser = async (parent, args, { req }) => {
     total
   }
 };
-
-const postShow = async (_, { id }, { req }) => {
-  return await Post.findById(id).populate("postedBy", "_id username").exec();
-}
 
 module.exports = {
   Query: {
