@@ -17,13 +17,13 @@ const postCreate = async (parent, args, { req }) => {
     postedBy: currentUserFromDb._id
   })
     .save()
-    .then((post) => post.populate("postedBy", "_id username").execPopulate());
+    .then((post) => post.populate("postedBy", "_id username email").execPopulate());
     
   return newPost; 
 };
 
 const postShow = async (_, { id }, { req }) => {
-  return Post.findById(id).populate("postedBy", "_id username").exec();
+  return Post.findById(id).populate("postedBy", "_id username email").exec();
 }
 
 const postUpdate = async (_, args, { req }) => {
