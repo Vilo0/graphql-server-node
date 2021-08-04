@@ -53,7 +53,7 @@ const allPosts = async (parent, args) => {
   const pages = parseInt(total / limit) > 0 ? parseInt(total / limit) : 1;
   
   const posts = await Post.find(conditions)
-    .populate("postedBy", "username _id")
+    .populate("postedBy", "username _id email")
     .sort({ createdAt: -1 })
     .limit(limit)
     .skip(limit * page).exec();
@@ -87,7 +87,7 @@ const postsByUser = async (parent, args, { req }) => {
   const pages = parseInt(total / limit) > 0 ? parseInt(total / limit) : 1;
   
   const posts =  await Post.find(conditions)
-    .populate("postedBy", "_id username")
+    .populate("postedBy", "_id username email")
     .sort({ createdAt: -1 })
     .limit(limit)
     .skip(limit * page);
