@@ -19,19 +19,27 @@ const postCreate = async (parent, args, { req }) => {
     .save()
     .then((post) => post.populate("postedBy", "_id username email").execPopulate());
     
-  return newPost; 
+  return newPost;
 };
 
 const postShow = async (_, { id }, { req }) => {
-  return Post.findById(id).populate("postedBy", "_id username email").exec();
+  return await Post.findById(id).populate("postedBy", "_id username email").exec();
 }
 
 const postUpdate = async (_, args, { req }) => {
-  return await Post.findByIdAndUpdate(args.id, { $set: args.input }, { new: true }).exec();
+  // const currentUser = await authCheck(req);
+  // validation
+  // if (args.input.content.trim() === "") throw new Error("Content is required");
+
+  return await Post.findByIdAndUpdate(args.id, { $set: args.input }, { new: true }).then((post) => post.populate("postedBy", "_id username email").execPopulate());
 };
 
 const postDelete = async (_, args, { req }) => {
-  return await Post.findByIdAndDelete(args.id).exec();
+  //const currentUser = await authCheck(req);
+  // validation
+  //if (args.input.content.trim() === "") throw new Error("Content is required");
+
+  return await Post.findByIdAndDelete(args.id).then((post) => post.populate("postedBy", "_id username email").execPopulate());
 };
 
 const totalPosts = async (_, args) => {
@@ -53,7 +61,7 @@ const allPosts = async (parent, args) => {
   const pages = parseInt(total / limit) > 0 ? parseInt(total / limit) : 1;
   
   const posts = await Post.find(conditions)
-    .populate("postedBy", "username _id email")
+    .populate("postedBy", "_id username email")
     .sort({ createdAt: -1 })
     .limit(limit)
     .skip(limit * page).exec();
