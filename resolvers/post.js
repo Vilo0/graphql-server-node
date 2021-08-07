@@ -39,7 +39,7 @@ const postDelete = async (_, args, { req }) => {
   // validation
   //if (args.input.content.trim() === "") throw new Error("Content is required");
 
-  return await Post.findByIdAndDelete(args.id).exec();
+  return await Post.findByIdAndDelete(args.id).then((post) => post.populate("postedBy", "_id username email").execPopulate()); 
 };
 
 const totalPosts = async (_, args) => {
