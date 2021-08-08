@@ -42,8 +42,8 @@ const postDelete = async (_, args, { req }) => {
   return await Post.findByIdAndDelete(args.id).then((post) => post.populate("postedBy", "_id username email").execPopulate()); 
 };
 
-const totalPosts = async (_, args) => {
-  return await Post.countDocuments().exec();
+const totalPosts = async (conditions) => {
+  return await Post.countDocuments(conditions).exec();
 }
 
 // query generic
