@@ -56,8 +56,7 @@ const allPosts = async (parent, args) => {
 
   const conditions = search ? { "content": { "$regex": search, "$options": "i" } } : {};
 
-
-  const total = totalPosts(conditions);
+  const total = await totalPosts(conditions);
   const pages = parseInt(total / limit) > 0 ? parseInt(total / limit) : 1;
   
   const posts = await Post.find(conditions)
@@ -91,7 +90,7 @@ const postsByUser = async (parent, args, { req }) => {
   let conditions = search ? { "content": { "$regex": search, "$options": "i" } } : {};
   conditions = { ...conditions, postedBy: currentUserFromDb };
   
-  const total = totalPosts(conditions);
+  const total = await totalPosts(conditions);
   const pages = parseInt(total / limit) > 0 ? parseInt(total / limit) : 1;
   
   const posts =  await Post.find(conditions)
