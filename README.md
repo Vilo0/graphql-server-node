@@ -1,12 +1,24 @@
 ### graphql-server-node
-Node Server + Express + Graphql + Apollo Server
+Proyecto backend realizado para Escalab en su curso de `GraphQl`. Proyecto de administración de posts: `GET`, `POST`, `PUT`, `DELETE`.
+
+Link demo proyecto: <a href="https://graphql-server-node-edgard.herokuapp.com/graphql">`https://graphql-server-node-edgard.herokuapp.com/graphql`</a>
+
+### Variables de entorno: 
+
+```
+DATABASE: Link a la base de datos en MONGO DB
+PORT: Puerto de conexión a la Base de Datos MONGO DB
+CLOUDINARY_CLOUD_NAME: nombre cuenta Cloudinary
+CLOUDINARY_API_KEY: apikey cuenta Cloudinary
+CLOUDINARY_API_SECRET: secret cuenta Cloudinary
+```
 
 ### Reestructuración node_modules
 yarn or npm install
 
 ### Funcionalidades
 
-
+#### `POSTS`
 <details><summary><b>All Posts</b></summary>
 
  
@@ -35,6 +47,14 @@ yarn or npm install
       "page": Int!,
       "search": String!
     }
+ 
+ `Headers`:
+ 
+  ```
+  {
+    "authtoken": String!
+  }
+  ```
     
 </details>
 
@@ -58,12 +78,22 @@ yarn or npm install
   `Response`: Post creado
   
  `Params`:
-
-    {
-      "limit": Number,
-      "page": Number,
-      "search": String
+ 
+ ```
+    "content": !String,
+    "image": {
+      "url": String!,
+      "public_id": String!
     }
+ ```
+ 
+ `Headers`:
+ 
+  ```
+  {
+    "authtoken": String!
+  }
+  ```
     
 </details>
 
@@ -74,12 +104,23 @@ yarn or npm install
   `Response`: Post Actualizado
   
  `Params`:
-
-    {
-      "limit": Number,
-      "page": Number,
-      "search": String
+ 
+ ```
+    "id": ID!
+    "content": String!,
+    "image": {
+      "url": String!,
+      "public_id": String!
     }
+ ```
+ 
+ `Headers`:
+ 
+  ```
+  {
+    "authtoken": String!
+  }
+  ```
     
 </details>
 
@@ -90,19 +131,121 @@ yarn or npm install
   `Response`: Post Eliminado
   
  `Params`:
+ 
+  ```
+     "id": ID!
+  ```
+ 
+ `Headers`:
+ 
+  ```
+  {
+    "authtoken": String!
+  }
+  ```
+    
+</details>
 
-    {
-      "limit": Number,
-      "page": Number,
-      "search": String
-    }
+
+#### `USERS`
+
+<details><summary><b>All Users</b></summary>
+ 
+  `Response`: Todos los usuarios en la base de datos
+    
+</details>
+
+
+<details><summary><b>Public Profile</b></summary>
+
+ 
+  `Response`: Información de un usuario
+  
+ `Params`:
+ 
+  ```
+     "id": ID!
+  ```
+ 
+ `Headers`:
+ 
+  ```
+  {
+    "authtoken": String!
+  }
+  ```
+    
+</details>
+
+
+<details><summary><b>Profile</b></summary>
+
+ 
+  `Response`: Perfil del usuario logueado
+ 
+ `Headers`:
+ 
+  ```
+  {
+    "authtoken": String!
+  }
+  ```
+    
+</details>
+
+
+<details><summary><b>Create User</b></summary>
+
+ 
+  `Response`: Usuario ingresado a la base de datos
+  
+ `Params`:
+ 
+ ```
+    "email": String!,
+    "username": String|!
+ ```
+ 
+ `Headers`:
+ 
+  ```
+  {
+    "authtoken": String!
+  }
+  ```
+    
+</details>
+
+
+<details><summary><b>Update User</b></summary>
+
+ 
+  `Response`: Usuario actualizado a la base de datos (actualizar el mismo perfil del usuario ingresado a través del token)
+  
+ `Params`:
+ 
+ ```
+    "about": String!,
+    "image": {
+     "url": String!,
+     "public_id": String!
+   }
+ ```
+ 
+ `Headers`:
+ 
+  ```
+  {
+    "authtoken": String!
+  }
+  ```
     
 </details>
 
 
 # Test Images in Graphql Playground
 
-### `Posts`
+#### `Posts`
 
 <p align="center">
   <span>All Posts</span>
@@ -153,7 +296,7 @@ yarn or npm install
 </p>
 
 
-### `Users`
+#### `Users`
 
 <p align="center">
   <span>All Users</span>
