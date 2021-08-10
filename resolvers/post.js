@@ -23,21 +23,28 @@ const postCreate = async (parent, args, { req }) => {
 };
 
 const postShow = async (_, { id }, { req }) => {
-  return await Post.findById(id).populate("postedBy", "_id username email").exec();
+  const post = await Post.findById(id).populate("postedBy", "_id username email").exec();
+  if(!post) throw new Error("Post not found!");
+  return post;
 }
 
 const postUpdate = async (_, args, { req }) => {
-  // const currentUser = await authCheck(req);
+  const currentUser = await authCheck(req);
   // validation
-  // if (args.input.content.trim() === "") throw new Error("Content is required");
+  const post = await Post.findById(args.id).populate("postedBy").exec();
+  if(!post) throw new Error("Post not found!");
+  if(post.postedBy.email !== currentUser.email) throw new Error("You cannot delete a post that is not yours");
 
   return await Post.findByIdAndUpdate(args.id, { $set: args.input }, { new: true }).then((post) => post.populate("postedBy", "_id username email").execPopulate());
 };
 
 const postDelete = async (_, args, { req }) => {
-  //const currentUser = await authCheck(req);
+  const currentUser = await authCheck(req);
   // validation
-  //if (args.input.content.trim() === "") throw new Error("Content is required");
+  const post = await Post.findById(args.id).populate("postedBy").exec();
+  console.log(post);
+  if(!post)  throw new Error("Post not found!");
+  if(post.postedBy.email !== currentUser.email) throw new Error("You cannot delete a post that is not yours");
 
   return await Post.findByIdAndDelete(args.id).then((post) => post.populate("postedBy", "_id username email").execPopulate()); 
 };
