@@ -102,6 +102,7 @@ yarn or npm install
 
 # Test Images in Graphql Playground
 
+### `Posts`
 
 <p align="center">
   <span>All Posts</span>
@@ -149,4 +150,34 @@ yarn or npm install
 <p align="center">
   <span>Post Delete- Not Found</span>
   <img src="./images/delete-post-not-found.png" alt="All Posts" width="1200">
+</p>
+
+
+### `Users`
+
+<p align="center">
+  <span>All Users</span>
+  <img src="./images/all-users.png" alt="All Posts" width="1200">
+</p>
+
+
+<p align="center">
+  <span>Public Profile</span>
+  <img src="./images/public-profile.png" alt="All Posts" width="1200">
+</p>
+
+
+<p align="center">
+  <span>Profile</span>
+  <img src="./images/profile-user.png" alt="All Posts" width="1200">
+</p>
+
+<p align="center">
+  <span>Create User</span>
+  <img src="./images/create-user.png" alt="All Posts" width="1200">
+</p>
+
+<p align="center">
+  <span>Update User</span>
+  <img src="./images/update-user.png" alt="All Posts" width="1200">
 </p>
