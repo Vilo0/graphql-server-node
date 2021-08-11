@@ -13,6 +13,24 @@ CLOUDINARY_API_KEY: apikey cuenta Cloudinary
 CLOUDINARY_API_SECRET: secret cuenta Cloudinary
 ```
 
+#### Firebase
+
+Documentación de generación de información: <a href="https://firebase.google.com/docs/web/setup?hl=es-419">`https://firebase.google.com/docs/web/setup?hl=es-419`</a>
+
+
+```
+FIREBASE_PROJECT_ID: project_id
+FIREBASE_PRIVATE_KEY_ID: private_key_id
+FIREBASE_PRIVATE_KEY: private_key
+FIREBASE_CLIENT_EMAIL: client_email
+FIREBASE_CLIENT_ID: client_id
+FIREBASE_AUTH_URI: auth_uri
+FIREBASE_TOKEN_URI: token_uri
+FIREBASE_AUTH_CERT_URL:  auth_provider_x509_cert_url
+FIREBASE_CLIENT_CERT_URL: client_x509_cert_url
+```
+
+
 ### Reestructuración node_modules
 yarn or npm install
 
