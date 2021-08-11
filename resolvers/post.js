@@ -49,8 +49,8 @@ const postDelete = async (_, args, { req }) => {
   return await Post.findByIdAndDelete(args.id).then((post) => post.populate("postedBy", "_id username email").execPopulate()); 
 };
 
-const totalPosts = async (conditions) => {
-  return await Post.countDocuments(conditions).exec();
+const totalPosts = async (parent, args) => {
+  return await Post.countDocuments().exec();
 }
 
 // query generic
@@ -63,7 +63,7 @@ const allPosts = async (parent, args) => {
 
   const conditions = search ? { "content": { "$regex": search, "$options": "i" } } : {};
 
-  const total = await totalPosts(conditions);
+  const total = await Post.countDocuments(conditions).exec();
   const pages = parseInt(total / limit) > 0 ? Math.ceil(total / limit) : 1;
   
   const posts = await Post.find(conditions)
@@ -97,7 +97,7 @@ const postsByUser = async (parent, args, { req }) => {
   let conditions = search ? { "content": { "$regex": search, "$options": "i" } } : {};
   conditions = { ...conditions, postedBy: currentUserFromDb };
   
-  const total = await totalPosts(conditions);
+  const total = await Post.countDocuments(conditions).exec();
   const pages = parseInt(total / limit) > 0 ? Math.ceil(total / limit) : 1;
   
   const posts =  await Post.find(conditions)
@@ -117,6 +117,7 @@ const postsByUser = async (parent, args, { req }) => {
 module.exports = {
   Query: {
     allPosts,
+    totalPosts,
     postsByUser,
     postShow
   },

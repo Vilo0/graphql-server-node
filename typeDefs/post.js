@@ -22,6 +22,7 @@ module.exports = gql`
     postShow(id: ID!): Post!
     allPosts(limit: Int, page: Int, search: String): PostInfo!
     postsByUser(limit: Int, page: Int, search: String): PostInfo!
+    totalPosts: Int!
   }
   # mutations
   type Mutation {
