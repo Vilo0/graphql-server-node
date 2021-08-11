@@ -37,6 +37,12 @@ yarn or npm install
 ### Funcionalidades
 
 #### `POSTS`
+<details><summary><b>Total Post</b></summary>
+
+  `Response`: Cantidad de post que se encuentren en la base de datos
+    
+</details>
+
 <details><summary><b>All Posts</b></summary>
 
  
@@ -264,6 +270,11 @@ yarn or npm install
 # Test Images in Graphql Playground
 
 #### `Posts`
+
+<p align="center">
+  <span>Total Posts</span>
+  <img src="./images/total-post.png" alt="All Posts" width="1200">
+</p>
 
 <p align="center">
   <span>All Posts</span>
